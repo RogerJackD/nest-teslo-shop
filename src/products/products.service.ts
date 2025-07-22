@@ -49,11 +49,9 @@ export class ProductsService {
   }
 
   async findOne(id: string) {
-    const productFind = await this.productRepository.findOne({
-      where : {
-        id : id
-      }
-    });
+    const productFind = await this.productRepository.findOneBy({id});
+    //const productFind = await this.productRepository.findOne({where : {id}});
+
 
     if( !productFind ){
       throw new NotFoundException(`Product with id ${id} not found`);
@@ -65,8 +63,11 @@ export class ProductsService {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    const product = await this.findOne( id );
+    //await this.productRepository.delete(id)
+    await this.productRepository.remove(product)
+    return 'action succesfully'
   }
 
   private handleDBException( error: any ){
