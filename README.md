@@ -12,5 +12,5 @@ docker-compose up -d
 start seed:
 
 ```
-http://localhost:3000
+http://localhost:3000/api/seed
 ```
