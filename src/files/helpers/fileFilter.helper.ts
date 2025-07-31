@@ -10,5 +10,5 @@ export const fileFilter = (req: Express.Request, file: Express.Multer.File, call
         return callbak( null, true );
     }
 
-    callbak(null, true);
+    callbak(null, false);
 }
