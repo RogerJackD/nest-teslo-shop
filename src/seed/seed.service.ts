@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { ProductsService } from '../products/products.service';
-import { initialData } from './data/seed-data';
+
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/auth/entities/auth.entity';
 import { Repository } from 'typeorm';
+
+import { User } from 'src/auth/entities/auth.entity';
+import { initialData } from './data/seed-data';
+import { ProductsService } from '../products/products.service';
+
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class SeedService {
@@ -41,10 +45,13 @@ export class SeedService {
     const users : User[] = [];
 
     seedUsers.forEach( user => {
-      users.push( this.userRepository.create( user ));
+      users.push( this.userRepository.create( {
+        ...user,
+        password: bcrypt.hashSync( user.password, 10 )
+      } ));
     });
 
-    const dbUsers = await this.userRepository.save( seedUsers );
+    const dbUsers = await this.userRepository.save( users );
 
     return dbUsers[0]; //return a user for relation seed user => product
   }
