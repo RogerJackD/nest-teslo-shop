@@ -16,6 +16,14 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     })
   );
+
+  const config = new DocumentBuilder()
+    .setTitle('Teslo RESTful api')
+    .setDescription('Teslo shop endpoints')
+    .setVersion('1.0')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
   
   await app.listen(process.env.PORT!);
   logger.log(`App running on port ${ process.env.PORT} `)
