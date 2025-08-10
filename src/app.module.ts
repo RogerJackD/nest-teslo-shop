@@ -9,6 +9,7 @@ import { SeedModule } from './seed/seed.module';
 import { FilesModule } from './files/files.module';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
+import { MessagesWsModule } from './messages-ws/messages-ws.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -36,7 +37,9 @@ import { AuthModule } from './auth/auth.module';
 
     FilesModule,
 
-    AuthModule
+    AuthModule,
+
+    MessagesWsModule
   ],
 })
 export class AppModule {}
